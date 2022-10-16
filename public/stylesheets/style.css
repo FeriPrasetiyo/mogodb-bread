@@ -1,0 +1,17 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+* {
+  font-family:'Times New Roman', Times, serif;
+}
+label{
+  font-size: large;
+}
+input{
+  margin: 2px 0px;
+}
