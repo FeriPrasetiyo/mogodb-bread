@@ -3,29 +3,27 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const { MongoClient } = require('mongodb');
-// or as an es module:
-// import { MongoClient } from 'mongodb'
+const { MongoClient } = require("mongodb");
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
-const client = new MongoClient(url);
+// Replace the uri string with your connection string.
+const uri = "mongodb://127.0.0.1:27017";
 
-// Database Name
-const dbName = 'users';
+const client = new MongoClient(uri);
+
+const dbName = "datadb"
 
 async function main() {
   try {
-    // Use connect method to connect to the server
     await client.connect();
-    console.log('Connected successfully to server');
     const db = client.db(dbName);
-    //const collection = db.collection('users');
+    // const db = database.collection('users');
 
-    // the following code examples can be pasted here...
+    // Query for a movie that has the title 'Back to the Future'
+    // const query = { title: 'Back to the Future' };
+    // const db = await users.find({}).toArray();
 
     var indexRouter = require('./routes/index')(db);
-    var usersRouter = require('./routes/users')(db);
+    var usersRouter = require('./routes/users');
 
     var app = express();
 
@@ -41,6 +39,90 @@ async function main() {
 
     app.use('/', indexRouter);
     app.use('/users', usersRouter);
+
+    var debug = require('debug')('MOGODB-BREAD');
+    var http = require('http');
+
+    /**
+     * Get port from environment and store in Express.
+     */
+
+    var port = normalizePort(process.env.PORT || '3001');
+    app.set('port', port);
+
+    /**
+     * Create HTTP server.
+     */
+
+    var server = http.createServer(app);
+
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+
+    /**
+     * Normalize a port into a number, string, or false.
+     */
+
+    function normalizePort(val) {
+      var port = parseInt(val, 10);
+
+      if (isNaN(port)) {
+        // named pipe
+        return val;
+      }
+
+      if (port >= 0) {
+        // port number
+        return port;
+      }
+
+      return false;
+    }
+
+    /**
+     * Event listener for HTTP server "error" event.
+     */
+
+    function onError(error) {
+      if (error.syscall !== 'listen') {
+        throw error;
+      }
+
+      var bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
+
+      // handle specific listen errors with friendly messages
+      switch (error.code) {
+        case 'EACCES':
+          console.error(bind + ' requires elevated privileges');
+          process.exit(1);
+          break;
+        case 'EADDRINUSE':
+          console.error(bind + ' is already in use');
+          process.exit(1);
+          break;
+        default:
+          throw error;
+      }
+    }
+
+    /**
+     * Event listener for HTTP server "listening" event.
+     */
+
+    function onListening() {
+      var addr = server.address();
+      var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+      debug('Listening on ' + bind);
+    }
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {
@@ -58,9 +140,13 @@ async function main() {
       res.render('error');
     });
 
-    module.exports = app;
+    return 'connect'
   } catch (err) {
-    throw "failed to connect"
+    throw "fail to connect"
   }
 }
+
+main()
+  .then()
+  .catch(console.error)
 
