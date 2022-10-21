@@ -7,7 +7,7 @@
     <title>Bread</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="/fontawesome/css/all.css" rel="stylesheet">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
             <h1>Bread</h1>
             <input type="hidden" name="page" value="1">
             <!-- mulai id -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" name="idCheck" id="flexCheckDefault"
                         <%=query.idCheck ? 'checked' : '' %>>
@@ -27,7 +27,7 @@
                     <input type="id" placeholder="Tulis ID" name="id" class="form-control" id="id"
                         value="<%= query.id %>">
                 </div>
-            </div>
+            </div> -->
             <!-- akhir id -->
             <!-- mulai string -->
             <div class="row">
@@ -101,8 +101,9 @@
             <!-- button -->
             <div class="row">
                 <div class="col">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                    <a href="/" class="btn btn-danger" role="button" aria-disabled="true">Reset</a>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <a href="/" class="btn btn-danger" role="button" aria-disabled="true"><i
+                            class="fa-solid fa-arrows-rotate"></i></a>
                 </div>
             </div>
         </div>
@@ -117,11 +118,27 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">String</th>
-                            <th scope="col">Integer</th>
-                            <th scope="col">Float</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Boolean</th>
+                            <th scope="col"><a
+                                    href="<%= url.replace(`sortBy=${sortBy}`, `sortBy=strings`).replace(`sortMode=${sortMode}`, `sortMode=${sortMode == 'asc' ? 'desc' : 'asc'}`) %>"><i
+                                        class="fa-solid fa-<%= sortBy == 'strings' ? sortMode == 'asc' ? 'sort-up':'sort-down':'sort'%>"></i>String</a>
+                            </th>
+                            <th scope="col"><a
+                                    href="<%= url.replace(`sortBy=${sortBy}`, `sortBy=integers`).replace(`sortMode=${sortMode}`, `sortMode=${sortMode == 'asc' ? 'desc' : 'asc'}`) %>"><i
+                                        class="fa-solid fa-<%= sortBy == 'integers' ? sortMode == 'asc' ? 'sort-up':'sort-down':'sort'%>"></i>Interger</a>
+                            </th>
+                            <th scope="col"><a
+                                    href="<%= url.replace(`sortBy=${sortBy}`, `sortBy=floats`).replace(`sortMode=${sortMode}`, `sortMode=${sortMode == 'asc' ? 'desc' : 'asc'}`) %>"><i
+                                        class="fa-solid fa-<%= sortBy == 'floats' ? sortMode == 'asc' ? 'sort-up':'sort-down':'sort'%>"></i>Float</a>
+                            </th>
+                            <th scope="col"><a
+                                    href="<%= url.replace(`sortBy=${sortBy}`, `sortBy=dates`).replace(`sortMode=${sortMode}`, `sortMode=${sortMode == 'asc' ? 'desc' : 'asc'}`) %>"><i
+                                        class="fa-solid fa-<%= sortBy == 'dates' ? sortMode == 'asc' ? 'sort-up':'sort-down':'sort'%>"></i>Date</a>
+                            </th>
+                            <th scope="col">
+                                <a
+                                    href="<%= url.replace(`sortBy=${sortBy}`, `sortBy=booleans`).replace(`sortMode=${sortMode}`, `sortMode=${sortMode == 'asc' ? 'desc' : 'asc'}`) %>"><i
+                                        class="fa-solid fa-<%= sortBy == 'booleans' ? sortMode == 'asc' ? 'sort-up':'sort-down':'sort'%>"></i>String</a>
+                            </th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -148,10 +165,11 @@
                                 </td>
                                 <td>
                                     <a href="/edit/<%= item._id %>" class="btn btn-success" tabindex="-1" role="button"
-                                        aria-disabled="true">Edit</a>
+                                        aria-disabled="true"><i class="fa-solid fa-pen"></i></a>
                                     <a href="/delete/<%= item._id%>" class="btn btn-danger" tabindex="-1" role="button"
                                         aria-disabled="true"
-                                        onclick="return confirm('Are you sure you want to delete this data?')">Delete</a>
+                                        onclick="return confirm('Are you sure you want to delete this data?')"><i
+                                            class="fa-solid fa-trash"></i></a>
                                 </td>
                             </tr>
                             <%})%>
@@ -201,7 +219,8 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <a href="/add" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Add</a>
+                <a href="/add" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true"><i
+                        class="fa-solid fa-plus"></i></a>
             </div>
         </div>
         <!-- akhir add -->
