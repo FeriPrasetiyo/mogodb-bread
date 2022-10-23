@@ -60,25 +60,26 @@ module.exports = function (db) {
         .limit(limit)
         .sort(sortMongo)
         .toArray()
-      res.render("index", {
-        data,
-        pages,
-        page,
-        filter,
-        query: req.query,
-        sortBy,
-        sortMode,
-        moment,
-        url,
-      });
+      res.json(data)
+      // res.render("index", {
+      //   data,
+      //   pages,
+      //   page,
+      //   filter,
+      //   query: req.query,
+      //   sortBy,
+      //   sortMode,
+      //   moment,
+      //   url,
+      // });
     } catch (err) {
       res.send(err)
     }
   })
 
-  router.get("/add", (req, res) => {
-    res.render("add");
-  });
+  // router.get("/add", (req, res) => {
+  //   res.render("add");
+  // });
 
   router.post("/add", async (req, res) => {
     try {
@@ -90,37 +91,37 @@ module.exports = function (db) {
         booleans: JSON.parse(req.body.boolean),
       };
       const data = await db.collection("users").insertOne(myobj);
-      res.redirect("/");
+      res.json(data);
     } catch (err) {
       res.send(err);
     }
   });
 
-  router.get("/delete/:id", async (req, res) => {
+  router.delete("/delete/:id", async (req, res) => {
     try {
       const data = await db
         .collection("users")
         .deleteOne({ '_id': ObjectId(`${req.params.id}`) });
       console.log(data)
-      res.redirect("/");
+      res.json(data);
     } catch (err) {
       console.log(err)
       res.send(err);
     }
   });
 
-  router.get("/edit/:id", async (req, res) => {
-    try {
-      const data = await db
-        .collection("users")
-        .findOne({ '_id': ObjectId(`${req.params.id}`) });
-      res.render("edit", { item: data, moment });
-    } catch (err) {
-      res.send(err);
-    }
-  });
+  // router.get("/edit/:id", async (req, res) => {
+  //   try {
+  //     const data = await db
+  //       .collection("users")
+  //       .findOne({ '_id': ObjectId(`${req.params.id}`) });
+  //     res.render("edit", { item: data, moment });
+  //   } catch (err) {
+  //     res.send(err);
+  //   }
+  // });
 
-  router.post("/edit/:id", async (req, res) => {
+  router.put("/edit/:id", async (req, res) => {
     try {
       var myobj = {
         strings: req.body.string,
@@ -134,7 +135,7 @@ module.exports = function (db) {
         { "_id": ObjectId(`${req.params.id}`) },
         { $set: myobj }
       )
-      res.redirect("/");
+      res.json(data);
     } catch (err) {
       res.send(err);
     }

@@ -74,9 +74,9 @@
                     <label class="form-check-label" for="flexCheckDefault">date</label>
                 </div>
                 <div class="col-md-4">
-                    <input type="date" class="form-control" id="float" name="startDate" value="<%= query.startDate %>">
+                    <input type="date" class="form-control" id="date" name="startDate" value="<%= query.startDate %>">
                     To
-                    <input type="date" class="form-control" id="float" name="endDate" value="<%= query.endDate %>">
+                    <input type="date" class="form-control" id="date" name="endDate" value="<%= query.endDate %>">
                 </div>
             </div>
             <!-- akhir date -->
@@ -137,7 +137,7 @@
                             <th scope="col">
                                 <a
                                     href="<%= url.replace(`sortBy=${sortBy}`, `sortBy=booleans`).replace(`sortMode=${sortMode}`, `sortMode=${sortMode == 'asc' ? 'desc' : 'asc'}`) %>"><i
-                                        class="fa-solid fa-<%= sortBy == 'booleans' ? sortMode == 'asc' ? 'sort-up':'sort-down':'sort'%>"></i>String</a>
+                                        class="fa-solid fa-<%= sortBy == 'booleans' ? sortMode == 'asc' ? 'sort-up':'sort-down':'sort'%>"></i>Boolean</a>
                             </th>
                             <th scope="col">Action</th>
                         </tr>
